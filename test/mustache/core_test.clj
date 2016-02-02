@@ -16,6 +16,14 @@
   ]
 })
 
+(def data3 {
+  "repo" '(
+    { "name" "resque" }
+    { "name" "hub" }
+    { "name" "rip" }
+  )
+})
+
 (defn quick-eval [template-filename data]
   (let [text (slurp template-filename)
         r (java.io.StringReader. text)
@@ -30,6 +38,8 @@
          (quick-eval "template1.mustache" data1)))
   (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
          (quick-eval "template2.mustache" data2)))
+  (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
+         (quick-eval "template2.mustache" data3)))
   )
 
 (comment
