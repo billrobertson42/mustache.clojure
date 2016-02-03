@@ -40,6 +40,7 @@
          (quick-eval "template1.mustache" data1)))
   (is (= "Hello Chris\nYou have just won 10000 dollars!\nWell, 7000.0 dollars, after taxes.\n"
          (quick-eval "template1.mustache" (assoc data1 "taxed_value" #(- 10000 (* 10000 0.3))))))
+
   (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
          (quick-eval "template2.mustache" data2)))
   (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
@@ -49,17 +50,51 @@
   
   )
 
-(comment
-
 (def data-keywords {
   :name "Chris"
   :value 10000
   :taxed_value (- 10000 (* 10000 0.4))
   :in_ca true})
 
-(deftest doesnt-work
+(def dashed-data-keywords {
+  :name "Chris"
+  :value 10000
+  :taxed-value (- 10000 (* 10000 0.4))
+  :in_ca true})
+
+
+(def data2-keywords {
+  :repo [
+    { :name "resque" }
+    { :name "hub" }
+    { :name "rip" }
+  ]
+})
+
+(def data3-keywords {
+  :repo '(
+    { :name "resque" }
+    { :name "hub" }
+    { :name "rip" }
+  )
+})
+
+(def data4-keywords
+  {"repo" (map #(hash-map :name %) ["resque" "hub" "drip"])})
+
+(deftest keywords-in-maps
   (is (= "Hello Chris\nYou have just won 10000 dollars!\nWell, 6000.0 dollars, after taxes.\n" 
          (quick-eval "template1.mustache" data-keywords)))
+  (is (= "Hello Chris\nYou have just won 10000 dollars!\nWell, 6000.0 dollars, after taxes.\n" 
+         (quick-eval "template1.mustache" dashed-data-keywords)))
+
+  (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
+         (quick-eval "template2.mustache" data2-keywords)))
+  (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>rip</b>\n"
+         (quick-eval "template2.mustache" data3-keywords)))
+  (is (= "  <b>resque</b>\n  <b>hub</b>\n  <b>drip</b>\n"
+         (quick-eval "template2.mustache" data4-keywords)))
+
+
   )
 
-)
