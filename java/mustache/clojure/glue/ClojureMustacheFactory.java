@@ -33,7 +33,7 @@ public class ClojureMustacheFactory extends DefaultMustacheFactory {
 
     /**
      * Resolve files based on provided location on disk
-     * @param fileRoot Location on filesystem to find templates
+     * @param fileRoot Location on file system to find templates
      */
     public ClojureMustacheFactory(File fileRoot) {
         super(new FileSystemResolver(fileRoot));
@@ -42,7 +42,7 @@ public class ClojureMustacheFactory extends DefaultMustacheFactory {
     
     /**
      * Resolve files based on provided location on disk
-     * @param fileRoot Location on filesystem to find templates
+     * @param fileRoot Location on file system to find templates
      */
     public ClojureMustacheFactory(Path fileRoot) {
         super(new FileSystemResolver(fileRoot.toFile()));

@@ -53,10 +53,10 @@ public class PersistentMapWrapper extends GuardedWrapper {
             return null;
         }
         
-        Object value = fieldKeyword.invoke(scope);
+        Object value = scope.valAt(fieldKeyword);
         if(value == null) {
             if(dashConvertedfieldKeyword != null) {
-                value = dashConvertedfieldKeyword.invoke(scope);
+                value = scope.valAt(dashConvertedfieldKeyword);
             }
             
             if(value == null) {
