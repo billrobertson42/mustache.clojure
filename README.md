@@ -14,7 +14,7 @@ Mustache.clojure depends on Mustache.java, which requires Java 1.8.
 
 Include mustache.clojure in your leinigen project.
 
-    [mustache.clojure "0.1.1"]
+    [mustache.clojure "0.2.0"]
 
 Create a mustache factory, and use that to create functions that wrap your mustache templates. e.g.
 
