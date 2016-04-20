@@ -114,3 +114,14 @@
         f1 (mustache-compile factory "template1.mustache")]
     (is (= "Hello Chris\nYou have just won 10000 dollars!\nWell, 6000.0 dollars, after taxes.\n"
            (f1 data1)))))
+
+(def issues 
+  {:ready_for_test {:issues [{:updated "2016-04-14T15:10:11.070-0400"}]}
+   :open {:issues [{:updated "2016-04-14T13:51:05.841-0400"}
+                   {:updated "2016-04-14T15:10:11.070-0400"}]}})
+
+(deftest nested-test
+  (let [factory (mustache-factory)
+        t (mustache-compile factory "nested.mustache")]
+    (is (= "Open: [ 2016-04-14T13:51:05.841-0400, 2016-04-14T15:10:11.070-0400,]" (t issues)))))
+
