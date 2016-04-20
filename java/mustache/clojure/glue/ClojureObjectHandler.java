@@ -15,11 +15,6 @@ import java.util.List;
 public class ClojureObjectHandler extends ReflectionObjectHandler {
 
     @Override
-    public Wrapper find(String name, List<Object> scopes) {
-        return super.find(name, scopes); 
-    }
-
-    @Override
     public Writer iterate(Iteration iteration, Writer writer, Object object, List<Object> scopes) {
         if (object == null) return writer;
         
