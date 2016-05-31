@@ -20,20 +20,34 @@ public class PersistentMapWrapper extends GuardedWrapper {
     protected final int scopeIndex;
     protected final Wrapper[] wrappers;
     protected final ObjectHandler handler;
-    
-    protected final String fieldName;
-    protected final Keyword fieldKeyword;
-    protected final Keyword dashConvertedfieldKeyword;
+
+    private final String[] fieldName;
+    private final Keyword[] fieldKeyword;
+    private final Keyword[] dashConvertedfieldKeyword;
+    private final int finalIndex;
 
     public PersistentMapWrapper(int scopeIndex, Wrapper[] wrappers, Guard[] guards, ObjectHandler handler, String fieldName) {
         super(guards);
         this.scopeIndex = scopeIndex;
         this.wrappers = wrappers;
         this.handler = handler;
-        
-        this.fieldName = fieldName;
-        this.fieldKeyword = RT.keyword(null, fieldName);
-        this.dashConvertedfieldKeyword = fieldName.indexOf('_') >= 0 ? RT.keyword(null, fieldName.replace('_', '-')) : null;
+
+        if (fieldName.startsWith(".") || fieldName.endsWith(".")) {
+            throw new IllegalArgumentException("Field name can not start with or end with a dot");
+        }
+
+        this.fieldName = fieldName.split("\\.");
+        fieldKeyword = new Keyword[this.fieldName.length];
+        for (int c = 0; c < fieldKeyword.length; ++c) {
+            fieldKeyword[c] = RT.keyword(null, this.fieldName[c]);
+        }
+
+        dashConvertedfieldKeyword = new Keyword[this.fieldName.length];
+        for (int c = 0; c < dashConvertedfieldKeyword.length; ++c) {
+            dashConvertedfieldKeyword[c] = this.fieldName[c].indexOf('_') >= 0
+                    ? RT.keyword(null, this.fieldName[c].replace('_', '-')) : null;
+        }
+        finalIndex = this.fieldName.length - 1;
     }
 
     protected Object unwrap(List<Object> scopes) {
@@ -44,25 +58,35 @@ public class PersistentMapWrapper extends GuardedWrapper {
         }
     }
 
+    private Object get(IPersistentMap scope, int index) {
+        Object temp = scope.valAt(fieldKeyword[index]);
+        if (temp == null) {
+            if (dashConvertedfieldKeyword[index] != null) {
+                temp = scope.valAt(dashConvertedfieldKeyword[index]);
+            }
+            if (temp == null) {
+                temp = scope.valAt(fieldName[index]);
+            }            
+        }
+        return temp;
+    }
+
     @Override
     public Object call(List<Object> scopes) throws GuardException {
         guardCall(scopes);
-        
-        IPersistentMap scope = (IPersistentMap)handler.coerce(unwrap(scopes));
-        if(scope == null) {
+
+        IPersistentMap scope = (IPersistentMap) handler.coerce(unwrap(scopes));
+        if (scope == null) {
             return null;
         }
-        
-        Object value = scope.valAt(fieldKeyword);
-        if(value == null) {
-            if(dashConvertedfieldKeyword != null) {
-                value = scope.valAt(dashConvertedfieldKeyword);
+
+        for (int c = 0; c < finalIndex; ++c) {
+            scope = (IPersistentMap) get(scope, c);
+            if(scope == null) {
+                return null;
             }
-            
-            if(value == null) {
-                value = scope.valAt(fieldName);
-            }
-        }        
-        return value;        
+        }
+
+        return get(scope, finalIndex);
     }
 }
