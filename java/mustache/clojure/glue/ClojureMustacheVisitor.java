@@ -4,6 +4,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.DefaultMustacheVisitor;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.TemplateContext;
+import com.github.mustachejava.codes.NotIterableCode;
 
 /**
  *
@@ -20,4 +21,11 @@ public class ClojureMustacheVisitor extends DefaultMustacheVisitor  {
         list.add(new ClojureIterableCode(templateContext, df, mustache, variable));
     }
 
+    @Override
+    public void notIterable(TemplateContext templateContext, String variable, Mustache mustache) {
+        list.add(new ClojureNotIterableCode(templateContext, df, mustache, variable));        
+    }
+
+    
+    
 }
