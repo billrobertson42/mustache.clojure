@@ -34,7 +34,8 @@ public class ClojureObjectHandler extends ReflectionObjectHandler {
         }
         
         if (scope instanceof IPersistentMap) {
-            return new PersistentMapWrapper(scopeIndex, wrappers, guards.toArray(new Guard[guards.size()]), this, name);
+            PersistentMapWrapper pmw = new PersistentMapWrapper(scopeIndex, wrappers, guards.toArray(new Guard[guards.size()]), this, name);
+            return pmw.getInScope((IPersistentMap)scope) == null ? null : pmw;
         }
         
         return super.findWrapper(scopeIndex, wrappers, guards, scope, name);

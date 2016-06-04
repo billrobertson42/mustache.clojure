@@ -66,7 +66,7 @@ public class PersistentMapWrapper extends GuardedWrapper {
             }
             if (temp == null) {
                 temp = scope.valAt(fieldName[index]);
-            }            
+            }
         }
         return temp;
     }
@@ -80,9 +80,13 @@ public class PersistentMapWrapper extends GuardedWrapper {
             return null;
         }
 
+        return getInScope(scope);
+    }
+
+    public Object getInScope(IPersistentMap scope) {
         for (int c = 0; c < finalIndex; ++c) {
             scope = (IPersistentMap) get(scope, c);
-            if(scope == null) {
+            if (scope == null) {
                 return null;
             }
         }
