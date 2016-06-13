@@ -131,7 +131,7 @@ tests:
     data: { boolean: false }
     template: " | {{^boolean}} {{! Important Whitespace }}\n {{/boolean}} | \n"
     expected: " |  \n  | \n"
-    regression: true
+    whitespace_diff: true
 
   - name: Indented Inline Sections
     desc: Single-line sections should not alter surrounding whitespace.
@@ -178,14 +178,14 @@ tests:
     data: { boolean: false }
     template: "  {{^boolean}}\n^{{/boolean}}\n/"
     expected: "^\n/"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Without Newline
     desc: Standalone tags should not require a newline to follow them.
     data: { boolean: false }
     template: "^{{^boolean}}\n/\n  {{/boolean}}"
     expected: "^\n/\n"
-    regression: true
+    whitespace_diff: true
 
   # Whitespace Insensitivity
 

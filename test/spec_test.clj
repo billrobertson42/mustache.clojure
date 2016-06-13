@@ -40,7 +40,7 @@
           expected (:expected test)
           original (original-result java-factory main-template test)
           actual (template-fn test-data)]
-      (if (:regression test)
+      (if (:whitespace_diff test)
         (is (= original actual) (str "java/clj " (:name test)))
         (is (= expected actual) (str "spec/clj " (:name test)))))))
     

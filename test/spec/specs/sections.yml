@@ -199,7 +199,7 @@ tests:
   - name: Internal Whitespace
     desc: Sections should not alter internal whitespace.
     data: { boolean: true }
-    regression: true
+    whitespace_diff: true
     template: " | {{#boolean}} {{! Important Whitespace }}\n {{/boolean}} | \n"
     expected: " |  \n  | \n"
 
@@ -246,14 +246,14 @@ tests:
   - name: Standalone Without Previous Line
     desc: Standalone tags should not require a newline to precede them.
     data: { boolean: true }
-    regression: true
+    whitespace_diff: true
     template: "  {{#boolean}}\n#{{/boolean}}\n/"
     expected: "#\n/"
 
   - name: Standalone Without Newline
     desc: Standalone tags should not require a newline to follow them.
     data: { boolean: true }
-    regression: true
+    whitespace_diff: true
     template: "#{{#boolean}}\n/\n  {{/boolean}}"
     expected: "#\n/\n"
 

@@ -34,7 +34,7 @@ tests:
     expected: |
       Begin.
       End.
-    regression: true
+    whitespace_diff: true
 
   - name: Indented Standalone
     desc: All standalone comment lines should be removed.
@@ -46,28 +46,28 @@ tests:
     expected: |
       Begin.
       End.
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Line Endings
     desc: '"\r\n" should be considered a newline for standalone tags.'
     data: { }
     template: "|\r\n{{! Standalone Comment }}\r\n|"
     expected: "|\r\n|"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Without Previous Line
     desc: Standalone tags should not require a newline to precede them.
     data: { }
     template: "  {{! I'm Still Standalone }}\n!"
     expected: "!"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Without Newline
     desc: Standalone tags should not require a newline to follow them.
     data: { }
     template: "!\n  {{! I'm Still Standalone }}"
     expected: "!\n"
-    regression: true
+    whitespace_diff: true
 
   - name: Multiline Standalone
     desc: All standalone comment lines should be removed.
@@ -81,7 +81,7 @@ tests:
     expected: |
       Begin.
       End.
-    regression: true
+    whitespace_diff: true
 
   - name: Indented Multiline Standalone
     desc: All standalone comment lines should be removed.
@@ -95,7 +95,7 @@ tests:
     expected: |
       Begin.
       End.
-    regression: true
+    whitespace_diff: true
 
   - name: Indented Inline
     desc: Inline comments should not strip whitespace

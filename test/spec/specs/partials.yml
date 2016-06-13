@@ -65,7 +65,7 @@ tests:
     template: "|\r\n{{>partial}}\r\n|"
     partials: { partial: ">" }
     expected: "|\r\n>|"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Without Previous Line
     desc: Standalone tags should not require a newline to precede them.
@@ -73,7 +73,7 @@ tests:
     template: "  {{>partial}}\n>"
     partials: { partial: ">\n>"}
     expected: "  >\n  >>"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Without Newline
     desc: Standalone tags should not require a newline to follow them.
@@ -81,7 +81,7 @@ tests:
     template: ">\n  {{>partial}}"
     partials: { partial: ">\n>" }
     expected: ">\n  >\n  >"
-    regression: true
+    whitespace_diff: true
 
   - name: Standalone Indentation
     desc: Each line of the partial should be indented before rendering.
@@ -102,7 +102,7 @@ tests:
       ->
        |
       /
-    regression: true
+    whitespace_diff: true
 
   # Whitespace Insensitivity
 
