@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :java-source-paths ["java"]
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [com.github.spullara.mustache.java/compiler "0.9.1"]
+                 [com.github.spullara.mustache.java/compiler "0.9.2"]
                  ]
   :profiles {:dev 
              {:dependencies 

@@ -172,7 +172,6 @@ tests:
     expected: '"Phil" == "Phil"'
 
   - name: Dotted Names - Context Precedence
-    regression: true
     desc: Dotted names should be resolved against former resolutions.
     data:
       a: { b: { } }
